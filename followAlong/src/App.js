@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+// Step 1: Import createContext from react
+import React, { useState, createContext } from "react";
 
 import { data } from "./data";
 
 import FamilyTree from "./components/FamilyTree";
 import "./styles.scss";
+
+// Step 2: Create a Context Object using createContext()
+// Call it something that relates to the data that the context object will be providing
+export const FamilyContext = createContext()
+
+// We can see we n ow have access to a Provider & Consumer component
+console.log(FamilyContext)
 
 export default function App() {
   const [families] = useState(data);
@@ -24,7 +32,15 @@ export default function App() {
           </button>
         ))}
       </section>
-      {activeFamily && <FamilyTree family={activeFamily} />}
+      {/* {activeFamily && <FamilyTree family={activeFamily} />} */}
+
+      {/* STEP 3: Wrap our component with Context Object PROVIDER component*/}
+      {/* We provide data to our Provider through a value prop*/}
+      {activeFamily && (
+        <FamilyContext.Provider value={activeFamily}>
+          <FamilyTree />
+        </FamilyContext.Provider>
+      )}
     </div>
   );
 }
